@@ -5,13 +5,13 @@ exercises: 0
 questions:
 - "How can I do the same operations on many different values?"
 objectives:
-- "Explain what a for loop does."
-- "Correctly write for loops to repeat simple calculations."
+- "Explain what a `for` loop does."
+- "Correctly write `for` loops to repeat simple calculations."
 - "Trace changes to a loop variable as the loop runs."
-- "Trace changes to other variables as they are updated by a for loop."
+- "Trace changes to other variables as they are updated by a `for` loop."
 keypoints:
 - "Use `for variable in sequence` to process the elements of a sequence one at a time."
-- "The body of a for loop must be indented."
+- "The body of a `for` loop must be indented."
 - "Use `len(thing)` to determine the length of something that contains other values."
 ---
 
@@ -31,10 +31,10 @@ word on a line of its own.
 ~~~
 word = 'lead'
 ~~~
-{: .python}
+{: .language-python}
 
 We can access a character in a string using its index. For example, we can get the first
-character of the word 'lead', by using word[0]. One way to print each character is to use
+character of the word `'lead'`, by using `word[0]`. One way to print each character is to use
 four `print` statements:
 
 ~~~
@@ -43,7 +43,7 @@ print(word[1])
 print(word[2])
 print(word[3])
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 l
@@ -71,9 +71,8 @@ print(word[0])
 print(word[1])
 print(word[2])
 print(word[3])
-
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 t
@@ -102,7 +101,7 @@ for char in word:
     print(char)
 
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 l
@@ -112,15 +111,15 @@ d
 ~~~
 {: .output}
 
-This is shorter---certainly shorter than something that prints every character in a hundred-letter string---and
-more robust as well:
+This is shorter --- certainly shorter than something that prints every character in a
+hundred-letter string --- and more robust as well:
 
 ~~~
 word = 'oxygen'
 for char in word:
     print(char)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 o
@@ -133,63 +132,44 @@ n
 {: .output}
 
 The improved version uses a [for loop]({{ page.root }}/reference/#for-loop)
-to repeat an operation---in this case, printing---once for each thing in a sequence.
+to repeat an operation --- in this case, printing --- once for each thing in a sequence.
 The general form of a loop is:
 
 ~~~
-for element in variable:
-    do things with element
+for variable in collection:
+    do things with variable
 ~~~
-{: .python}
+{: .language-python}
 
 Using the oxygen example above, the loop might look like this:
 
 ![loop_image](../fig/loops_image.png)
 
-where each character (`char`) in the variable `word` is looped through and printed one character after another.
-The numbers in the diagram denote which loop cycle the character was printed in (1 being the first loop, and 6 being the final loop).
+where each character (`char`) in the variable `word` is looped through and printed one character
+after another. The numbers in the diagram denote which loop cycle the character was printed in (1
+being the first loop, and 6 being the final loop).
 
-We can call the [loop variable]({{ page.root }}/reference/#loop-variable) anything we like,
-but there must be a colon at the end of the line starting the loop,
-and we must indent anything we want to run inside the loop. Unlike many other languages, there is no
-command to signify the end of the loop body (e.g. end for); what is indented after the for statement belongs to the loop.
+We can call the [loop variable]({{ page.root }}/reference/#loop-variable) anything we like, but
+there must be a colon at the end of the line starting the loop, and we must indent anything we
+want to run inside the loop. Unlike many other languages, there is no command to signify the end
+of the loop body (e.g. `end for`); what is indented after the `for` statement belongs to the loop.
 
 
 > ## What's in a name?
 >
-> In the example above, the loop variable was given the name `char`
-> as a mnemonic; it is short for 'character'.
-> 'Char' is not a keyword in Python that pulls the characters
-> from words or strings.
-> In fact when a similar loop is run over a list rather than a word,
-> the output would be each member of that list printed in order,
-> rather than the characters.
 >
-> ~~~
-> elements = ['oxygen', 'nitrogen', 'argon']
-> for char in elements:
->    print(char)
-> ~~~
-> {: .python}
->
-> ~~~
-> oxygen
-> nitrogen
-> argon
-> ~~~
-> {: .output}
->
-> We can choose any name we want for variables.
-> We might just as easily have chosen the name `banana`
-> for the loop variable,
-> as long as we use the same name when we invoke the variable inside the loop:
+> In the example above, the loop variable was given the name `char` as a mnemonic;
+> it is short for 'character'.
+> We can choose any name we want for variables. We might just as easily have chosen the name
+> `banana` for the loop variable, as long as we use the same name when we invoke the variable inside
+> the loop:
 >
 > ~~~
 > word = 'oxygen'
 > for banana in word:
 >     print(banana)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > o
@@ -201,9 +181,8 @@ command to signify the end of the loop body (e.g. end for); what is indented aft
 > ~~~
 > {: .output}
 >
-> It is a good idea to choose variable names
-> that are meaningful so that it is easier
-> to understand what the loop is doing.
+> It is a good idea to choose variable names that are meaningful, otherwise it would be more
+> difficult to understand what the loop is doing.
 {: .callout}
 
 Here's another loop that repeatedly updates a variable:
@@ -214,7 +193,7 @@ for vowel in 'aeiou':
     length = length + 1
 print('There are', length, 'vowels')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 There are 5 vowels
@@ -249,7 +228,7 @@ for letter in 'abc':
     print(letter)
 print('after the loop, letter is', letter)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 a
@@ -265,7 +244,7 @@ that Python actually has a built-in function to do it called `len`:
 ~~~
 print(len('aeiou'))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 5
@@ -279,14 +258,19 @@ so we should always use it when we can.
 
 > ## From 1 to N
 >
-> Python has a built-in function called `range` that creates a sequence of numbers. Range can
-> accept 1-3 parameters. If one parameter is input, range creates an array of that length,
-> starting at zero and incrementing by 1. If 2 parameters are input, range starts at
-> the first and ends just before the second, incrementing by one. If range is passed 3 parameters,
-> it starts at the first one, ends just before the second one, and increments by the third one. For
-> example,
-> `range(3)` produces the numbers 0, 1, 2, while `range(2, 5)` produces 2, 3, 4,
-> and `range(3, 10, 3)` produces 3, 6, 9.
+> Python has a built-in function called `range` that creates a sequence of numbers. `range` can
+> accept 1, 2, or 3 parameters.
+>
+> * If one parameter is given, `range` creates an array of that length,
+>   starting at zero and incrementing by 1.
+>   For example, `range(3)` produces the numbers `0, 1, 2`.
+> * If two parameters are given, `range` starts at
+>   the first and ends just before the second, incrementing by one.
+>   For example, `range(2, 5)` produces `2, 3, 4`.
+> * If `range` is given 3 parameters,
+>   it starts at the first one, ends just before the second one, and increments by the third one.
+>   For exmaple `range(3, 10, 2)` produces `3, 5, 7, 9`.
+>
 > Using `range`,
 > write a loop that uses `range` to print the first 3 natural numbers:
 >
@@ -295,14 +279,14 @@ so we should always use it when we can.
 > 2
 > 3
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > > ## Solution
 > > ~~~
 > > for i in range(1, 4):
 > >    print(i)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -313,7 +297,7 @@ so we should always use it when we can.
 > ~~~
 > print(5 ** 3)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > 125
@@ -330,7 +314,7 @@ so we should always use it when we can.
 > >    result = result * 5
 > > print(result)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -349,7 +333,7 @@ so we should always use it when we can.
 > >    newstring = char + newstring
 > > print(newstring)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -363,9 +347,9 @@ so we should always use it when we can.
 > for i, x in enumerate(xs):
 >     # Do something with i and x
 > ~~~
-> {: .python}
+> {: .language-python}
 >
-> The loop above assigns the index to `i` and the value to `x`.
+> The code above loops through `xs`, assigning the index to `i` and the value to `x`.
 >
 > Suppose you have encoded a polynomial as a list of coefficients in
 > the following way: the first element is the constant term, the
@@ -376,7 +360,7 @@ so we should always use it when we can.
 > x = 5
 > cc = [2, 4, 3]
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > y = cc[0] * x**0 + cc[1] * x**1 + cc[2] * x**2
@@ -393,6 +377,8 @@ so we should always use it when we can.
 > > for i, c in enumerate(cc):
 > >     y = y + x**i * c
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
+
+{% include links.md %}

@@ -7,9 +7,15 @@ questions:
 objectives:
 - "Explain what a list is."
 - "Create and index lists of simple values."
+- "Change the values of individual elements"
+- "Append values to an existing list"
+- "Reorder and slice list elements"
+- "Create and manipulate nested lists"
 keypoints:
 - "`[value1, value2, value3, ...]` creates a list."
-- "Lists are indexed and sliced in the same way as strings and arrays."
+- "Lists can contain any Python object, including lists (i.e., list of lists)."
+- "Lists are indexed and sliced with square brackets (e.g., list[0] and
+list[2:9]), in the same way as strings and arrays."
 - "Lists are mutable (i.e., their values can be changed in place)."
 - "Strings are immutable (i.e., the characters in them cannot be changed)."
 ---
@@ -25,7 +31,7 @@ We create a list by putting values inside square brackets and separating the val
 odds = [1, 3, 5, 7]
 print('odds are:', odds)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 odds are: [1, 3, 5, 7]
@@ -37,7 +43,7 @@ We select individual elements from lists by indexing them:
 ~~~
 print('first and last:', odds[0], odds[-1])
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 first and last: 1 7
@@ -51,7 +57,7 @@ the loop variable is assigned elements one at a time:
 for number in odds:
     print(number)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 1
@@ -67,16 +73,16 @@ but we cannot change individual characters in a string.
 For example:
 
 ~~~
-names = ['Newton', 'Darwing', 'Turing'] # typo in Darwin's name
+names = ['Curie', 'Darwing', 'Turing']  # typo in Darwin's name
 print('names is originally:', names)
-names[1] = 'Darwin' # correct the name
+names[1] = 'Darwin'  # correct the name
 print('final value of names:', names)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
-names is originally: ['Newton', 'Darwing', 'Turing']
-final value of names: ['Newton', 'Darwin', 'Turing']
+names is originally: ['Curie', 'Darwing', 'Turing']
+final value of names: ['Curie', 'Darwin', 'Turing']
 ~~~
 {: .output}
 
@@ -86,7 +92,7 @@ works, but:
 name = 'Darwin'
 name[0] = 'd'
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -101,26 +107,55 @@ TypeError: 'str' object does not support item assignment
 
 does not.
 
-> ## Ch-Ch-Ch-Changes
+> ## Ch-Ch-Ch-Ch-Changes
 >
 > Data which can be modified in place is called [mutable]({{ page.root }}/reference/#mutable),
 > while data which cannot be modified is called [immutable]({{ page.root }}/reference/#immutable).
-> Strings and numbers are immutable. This does not mean that variables with string or number values are constants,
-> but when we want to change the value of a string or number variable, we can only replace the old value
-> with a completely new value.
+> Strings and numbers are immutable. This does not mean that variables with string or number values
+> are constants, but when we want to change the value of a string or number variable, we can only
+> replace the old value with a completely new value.
 >
-> Lists and arrays, on the other hand, are mutable: we can modify them after they have been created. We can
-> change individual elements, append new elements, or reorder the whole list.  For some operations, like
-> sorting, we can choose whether to use a function that modifies the data in place or a function that returns a
-> modified copy and leaves the original unchanged.
+> Lists and arrays, on the other hand, are mutable: we can modify them after they have been
+> created. We can change individual elements, append new elements, or reorder the whole list.  For
+> some operations, like sorting, we can choose whether to use a function that modifies the data in
+> place or a function that returns a modified copy and leaves the original unchanged.
 >
-> Be careful when modifying data in place.  If two variables refer to the same list, and you modify the list
-> value, it will change for both variables! If you want variables with mutable values to be independent, you
+> Be careful when modifying data in place.  If two variables refer to the same list, and you modify
+> the list value, it will change for both variables!
+>
+> ~~~
+> salsa = ['peppers', 'onions', 'cilantro', 'tomatoes']
+> my_salsa = salsa        # <-- my_salsa and salsa point to the *same* list data in memory
+> salsa[0] = 'hot peppers'
+> print('Ingredients in my salsa:', my_salsa)
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> Ingredients in my salsa: ['hot peppers', 'onions', 'cilantro', 'tomatoes']
+> ~~~
+> {: .output}
+>
+> If you want variables with mutable values to be independent, you
 > must make a copy of the value when you assign it.
 >
-> Because of pitfalls like this, code which modifies data in place can be more difficult to understand. However,
-> it is often far more efficient to modify a large data structure in place than to create a modified copy for
-> every small change. You should consider both of these aspects when writing your code.
+> ~~~
+> salsa = ['peppers', 'onions', 'cilantro', 'tomatoes']
+> my_salsa = list(salsa)        # <-- makes a *copy* of the list
+> salsa[0] = 'hot peppers'
+> print('Ingredients in my salsa:', my_salsa)
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> Ingredients in my salsa: ['peppers', 'onions', 'cilantro', 'tomatoes']
+> ~~~
+> {: .output}
+>
+> Because of pitfalls like this, code which modifies data in place can be more difficult to
+> understand. However, it is often far more efficient to modify a large data structure in place
+> than to create a modified copy for every small change. You should consider both of these aspects
+> when writing your code.
 {: .callout}
 
 > ## Nested Lists
@@ -133,7 +168,7 @@ does not.
 >      ['cabbage', 'lettuce', 'garlic'],
 >      ['apple', 'pear', 'banana']]
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > Here is a visual example of how indexing a list of lists `x` works:
 >
@@ -146,7 +181,7 @@ does not.
 > ~~~
 > print([x[0]])
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > [['pepper', 'zucchini', 'onion']]
@@ -156,7 +191,7 @@ does not.
 > ~~~
 > print(x[0])
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > ['pepper', 'zucchini', 'onion']
@@ -166,7 +201,7 @@ does not.
 > ~~~
 > print(x[0][0])
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > 'pepper'
@@ -177,6 +212,13 @@ does not.
 > for the image above.
 {: .callout}
 
+> ## Heterogeneous Lists
+> Lists in Python can contain elements of different types. Example:
+> ~~~ 
+> sample_ages = [10, 12.5, 'Unknown']
+> ~~~
+{: .callout}
+
 There are many ways to change the contents of lists besides assigning new values to
 individual elements:
 
@@ -184,7 +226,7 @@ individual elements:
 odds.append(11)
 print('odds after adding a value:', odds)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 odds after adding a value: [1, 3, 5, 7, 11]
@@ -195,7 +237,7 @@ odds after adding a value: [1, 3, 5, 7, 11]
 del odds[0]
 print('odds after removing the first element:', odds)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 odds after removing the first element: [3, 5, 7, 11]
@@ -206,14 +248,15 @@ odds after removing the first element: [3, 5, 7, 11]
 odds.reverse()
 print('odds after reversing:', odds)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 odds after reversing: [11, 7, 5, 3]
 ~~~
 {: .output}
 
-While modifying in place, it is useful to remember that Python treats lists in a slightly counter-intuitive way.
+While modifying in place, it is useful to remember that Python treats lists in a slightly
+counter-intuitive way.
 
 If we make a list and (attempt to) copy it then modify in place, we can cause all sorts of trouble:
 
@@ -224,7 +267,7 @@ primes.append(2)
 print('primes:', primes)
 print('odds:', odds)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 primes: [1, 3, 5, 7, 2]
@@ -232,8 +275,9 @@ odds: [1, 3, 5, 7, 2]
 ~~~
 {: .output}
 
-This is because Python stores a list in memory, and then can use multiple names to refer to the same list.
-If all we want to do is copy a (simple) list, we can use the `list` function, so we do not modify a list we did not mean to:
+This is because Python stores a list in memory, and then can use multiple names to refer to the
+same list. If all we want to do is copy a (simple) list, we can use the `list` function, so we do
+not modify a list we did not mean to:
 
 ~~~
 odds = [1, 3, 5, 7]
@@ -242,7 +286,7 @@ primes.append(2)
 print('primes:', primes)
 print('odds:', odds)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 primes: [1, 3, 5, 7, 2]
@@ -250,7 +294,8 @@ odds: [1, 3, 5, 7]
 ~~~
 {: .output}
 
-This is different from how variables worked in lesson 1, and more similar to how a spreadsheet works.
+This is different from how variables worked in lesson 1, and more similar to how a spreadsheet
+works.
 
 > ## Turn a String Into a List
 >
@@ -259,14 +304,14 @@ This is different from how variables worked in lesson 1, and more similar to how
 > ~~~
 > ["h", "e", "l", "l", "o"]
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > Hint: You can create an empty list like this:
 >
 > ~~~
 > my_list = []
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > > ## Solution
 > > ~~~
@@ -275,12 +320,12 @@ This is different from how variables worked in lesson 1, and more similar to how
 > >     my_list.append(char)
 > > print(my_list)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
 Subsets of lists and strings can be accessed by specifying ranges of values in brackets,
-similar to how we accessed ranges of positions in a Numpy array.
+similar to how we accessed ranges of positions in a NumPy array.
 This is commonly referred to as "slicing" the list/string.
 
 ~~~
@@ -298,7 +343,7 @@ print("autosomes:", autosomes)
 last = chromosomes[-1]
 print("last:", last)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 group: Drosophila
@@ -316,7 +361,7 @@ last: 4
 > string_for_slicing = "Observation date: 02-Feb-2013"
 > list_for_slicing = [["fluorine", "F"], ["chlorine", "Cl"], ["bromine", "Br"], ["iodine", "I"], ["astatine", "At"]]
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > "2013"
@@ -336,7 +381,7 @@ last: 4
 > > string_for_slicing[-4:]
 > > list_for_slicing[-4:]
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -356,7 +401,7 @@ last: 4
 > subset = primes[0:12:3]
 > print("subset", subset)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > subset [2, 7, 17, 29]
@@ -373,7 +418,7 @@ last: 4
 > subset = primes[2:12:3]
 > print("subset", subset)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > subset [5, 13, 23, 37]
@@ -387,7 +432,7 @@ last: 4
 > ~~~
 > beatles = "In an octopus's garden in the shade"
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > I notpssgre ntesae
@@ -401,7 +446,7 @@ last: 4
 > > ~~~
 > > beatles[0:35:2]
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > >
 > > You can also leave out the beginning and end of the slice to take the whole string
 > > and provide only the step argument to go every second
@@ -410,11 +455,12 @@ last: 4
 > > ~~~
 > > beatles[::2]
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
-If you want to take a slice from the beginning of a sequence, you can omit the first index in the range:
+If you want to take a slice from the beginning of a sequence, you can omit the first index in the
+range:
 
 ~~~
 date = "Monday 4 January 2016"
@@ -423,7 +469,7 @@ print("Using 0 to begin range:", day)
 day = date[:6]
 print("Omitting beginning index:", day)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 Using 0 to begin range: Monday
@@ -431,7 +477,8 @@ Omitting beginning index: Monday
 ~~~
 {: .output}
 
-And similarly, you can omit the ending index in the range to take a slice to the very end of the sequence:
+And similarly, you can omit the ending index in the range to take a slice to the very end of the
+sequence:
 
 ~~~
 months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
@@ -440,9 +487,9 @@ print("With known last position:", sond)
 sond = months[8:len(months)]
 print("Using len() to get last entry:", sond)
 sond = months[8:]
-("Omitting ending index:", sond)
+print("Omitting ending index:", sond)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 With known last position: ["sep", "oct", "nov", "dec"]
@@ -450,47 +497,6 @@ Using len() to get last entry: ["sep", "oct", "nov", "dec"]
 Omitting ending index: ["sep", "oct", "nov", "dec"]
 ~~~
 {: .output}
-
-> ## Swapping the contents of variables
->
-> Explain what the overall effect of this code is:
->
-> ~~~
-> left = 'L'
-> right = 'R'
->
-> temp = left
-> left = right
-> right = temp
-> ~~~
-> {: .python}
->
-> Compare it to:
->
-> ~~~
-> left, right = [right, left]
-> ~~~
-> {: .python}
->
-> Do they always do the same thing?
-> Which do you find easier to read?
->
-> > ## Solution
-> > Both examples exchange the values of `left` and `right`:
-> >
-> > ~~~
-> > print(left, right)
-> > ~~~
-> > {: .python}
-> >
-> > ~~~
-> > R L
-> > ~~~
-> > {: .output}
-> >
-> >In the first case we used a temporary variable `temp` to keep the value of `left` before we overwrite it with the value of `right`. In the second case, `right` and `left` are packed into a list and then unpacked into `left` and `right`.
-> {: .solution}
-{: .challenge}
 
 > ## Overloading
 >
@@ -503,7 +509,7 @@ Omitting ending index: ["sep", "oct", "nov", "dec"]
 > repeats = counts * 2
 > print(repeats)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > 1.  `[2, 4, 6, 8, 10, 2, 4, 6, 8, 10]`
 > 2.  `[4, 8, 12, 16, 20]`
@@ -516,7 +522,8 @@ Omitting ending index: ["sep", "oct", "nov", "dec"]
 >
 > > ## Solution
 > >
-> > The multiplication operator `*` used on a list replicates elements of the list and concatenates them together:
+> > The multiplication operator `*` used on a list replicates elements of the list and concatenates
+> > them together:
 > >
 > > ~~~
 > > [2, 4, 6, 8, 10, 2, 4, 6, 8, 10]
@@ -528,6 +535,8 @@ Omitting ending index: ["sep", "oct", "nov", "dec"]
 > > ~~~
 > > counts + counts
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
+
+{% include links.md %}

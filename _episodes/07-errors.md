@@ -44,21 +44,21 @@ def favorite_ice_cream():
 
 favorite_ice_cream()
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
 IndexError                                Traceback (most recent call last)
 <ipython-input-1-70bd89baa4df> in <module>()
       6     print(ice_creams[3])
-      7 
+      7
 ----> 8 favorite_ice_cream()
 
 <ipython-input-1-70bd89baa4df> in favorite_ice_cream()
       4         "vanilla",                                                                    "strawberry"
       5     ]
 ----> 6     print(ice_creams[3])
-      7 
+      7
       8 favorite_ice_cream()
 
 IndexError: list index out of range
@@ -140,7 +140,7 @@ def some_function()
     print(msg)
      return msg
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
   File "<ipython-input-3-6bb841ea1423>", line 1
@@ -165,7 +165,7 @@ def some_function():
     print(msg)
      return msg
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
   File "<ipython-input-4-ae290e7659cb>", line 4
@@ -181,37 +181,33 @@ it *always* means that there is a problem with how your code is indented.
 
 > ## Tabs and Spaces
 >
-> A quick note on indentation errors:
-> they can sometimes be insidious,
-> especially if you are mixing spaces and tabs.
-> Because they are both [whitespace]({{ page.root }}/reference/#whitespace),
-> it is difficult to visually tell the difference.
-> The Jupyter notebook actually gives us a bit of a hint,
-> but not all Python editors will do that.
-> In the following example,
-> the first two lines are using a tab for indentation,
-> while the third line uses four spaces:
+> Some indentation errors are harder to spot than others.
+> In particular, mixing spaces and tabs can be difficult to spot
+> because they are both [whitespace]({{ page.root }}/reference/#whitespace).
+> In the example below, the first two lines in the body of the function
+> `some_function` are indented with tabs, while the third line &mdash; with spaces.
+> If you're working in a Jupyter notebook, be sure to copy and paste this example
+> rather than trying to type it in manually because Jupyter automatically replaces
+> tabs with spaces.
 >
 > ~~~
 > def some_function():
->     msg = "hello, world!"
->     print(msg)
->     return msg
+> 	msg = "hello, world!"
+> 	print(msg)
+>         return msg
 > ~~~
-> {: .python}
+> {: .language-python}
+>
+> Visually it is impossible to spot the error.
+> Fortunately, Python does not allow you to mix tabs and spaces.
 >
 > ~~~
 >   File "<ipython-input-5-653b36fbcd41>", line 4
 >     return msg
 >               ^
-> IndentationError: unindent does not match any outer indentation level
+> TabError: inconsistent use of tabs and spaces in indentation
 > ~~~
 > {: .error}
->
-> By default, one tab is equivalent to eight spaces,
-> so the only way to mix tabs and spaces is to make it look like this.
-> In general, it is better to just never use tabs and always use spaces,
-> because it can make things very confusing.
 {: .callout}
 
 ## Variable Name Errors
@@ -223,7 +219,7 @@ For example:
 ~~~
 print(a)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -239,7 +235,7 @@ Variable name errors come with some of the most informative error messages,
 which are usually of the form "name 'the_variable_name' is not defined".
 
 Why does this error message occur?
-That's harder question to answer,
+That's a harder question to answer,
 because it depends on what your code is supposed to do.
 However,
 there are a few very common reasons why you might have an undefined variable.
@@ -248,7 +244,7 @@ The first is that you meant to use a [string]({{ page.root }}/reference/#string)
 ~~~
 print(hello)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -269,7 +265,7 @@ for number in range(10):
     count = count + number
 print("The count is:", count)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -295,7 +291,7 @@ for number in range(10):
     count = count + number
 print("The count is:", count)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -328,7 +324,7 @@ print("Letter #2 is", letters[1])
 print("Letter #3 is", letters[2])
 print("Letter #4 is", letters[3])
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 Letter #1 is a
@@ -367,7 +363,7 @@ More generally, problems with input and output manifest as
 ~~~
 file_handle = open('myfile.txt', 'r')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -401,7 +397,7 @@ telling you that the file was not opened for reading:
 file_handle = open('myfile.txt', 'w')
 file_handle.read()
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -450,7 +446,7 @@ often reveals common reasons why you might get that error.
 >
 > print_friday_message()
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > ---------------------------------------------------------------------------
@@ -500,7 +496,7 @@ often reveals common reasons why you might get that error.
 >    print("But at least python tells us about them!")
 >   print("So they are usually not too hard to fix.")
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > > ## Solution
 > > `SyntaxError` for missing `():` at end of first line,
@@ -513,7 +509,7 @@ often reveals common reasons why you might get that error.
 > >     print("But at least python tells us about them!")
 > >     print("So they are usually not too hard to fix.")
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -537,7 +533,7 @@ often reveals common reasons why you might get that error.
 >         message = message + "b"
 > print(message)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > > ## Solution
 > > 3 `NameError`s for `number` being misspelled, for `message` not defined, and for `a` not being in quotes.
@@ -554,7 +550,7 @@ often reveals common reasons why you might get that error.
 > >         message = message + "b"
 > > print(message)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -568,7 +564,7 @@ often reveals common reasons why you might get that error.
 > seasons = ['Spring', 'Summer', 'Fall', 'Winter']
 > print('My favorite season is ', seasons[4])
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > > ## Solution
 > > `IndexError`; the last entry is `seasons[3]`, so `seasons[4]` doesn't make sense.
@@ -578,6 +574,8 @@ often reveals common reasons why you might get that error.
 > > seasons = ['Spring', 'Summer', 'Fall', 'Winter']
 > > print('My favorite season is ', seasons[-1])
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
+
+{% include links.md %}

@@ -13,17 +13,17 @@ objectives:
 - "Set default values for function parameters."
 - "Explain why we should divide programs into small, single-purpose functions."
 keypoints:
-- "Define a function using `def name(...params...)`."
+- "Define a function using `def function_name(parameter)`."
 - "The body of a function must be indented."
-- "Call a function using `name(...values...)`."
+- "Call a function using `function_name(value)`."
 - "Numbers are stored as integers or floating-point numbers."
-- "Integer division produces the whole part of the answer (not the fractional part)."
-- "Each time a function is called, a new stack frame is created on the **call stack** to hold its parameters and local variables."
-- "Python looks for variables in the current stack frame before looking for them at the top level."
+- "Variables defined within a function can only be seen and used within the body of the function."
+- "If a variable is not defined within the function it is used, Python looks for a definition before the function call"
 - "Use `help(thing)` to view help for something."
 - "Put docstrings in functions to provide help for that function."
 - "Specify default values for parameters when defining a function using `name=value` in the parameter list."
 - "Parameters can be passed by matching based on name, by position, or by omitting them (in which case the default value is used)."
+- "Put code whose parameters change frequently in a function, then call it with different parameter values to customize its behavior."
 ---
 
 At this point,
@@ -39,16 +39,16 @@ on a different dataset or at a different point in our program?
 Cutting and pasting it is going to make our code get very long and very repetitive,
 very quickly.
 We'd like a way to package our code so that it is easier to reuse,
-and Python provides for this by letting us define things called 'functions' -
+and Python provides for this by letting us define things called 'functions' ---
 a shorthand way of re-executing longer pieces of code.
-
-Let's start by defining a function `fahr_to_kelvin` that converts temperatures from Fahrenheit to Kelvin:
+Let's start by defining a function `fahr_to_celsius` that converts temperatures
+from Fahrenheit to Celsius:
 
 ~~~
-def fahr_to_kelvin(temp):
-    return ((temp - 32) * (5/9)) + 273.15
+def fahr_to_celsius(temp):
+    return ((temp - 32) * (5/9))
 ~~~
-{: .python}
+{: .language-python}
 
 ![The Blueprint for a Python Function](../fig/python-function.svg)
 
@@ -56,171 +56,88 @@ def fahr_to_kelvin(temp):
 regenerate the above figure --->
 
 The function definition opens with the keyword `def` followed by the
-name of the function and a parenthesized list of parameter names. The
+name of the function (`fahr_to_celsius`) and a parenthesized list of parameter names (`temp`). The
 [body]({{ page.root }}/reference/#function-body) of the function --- the
 statements that are executed when it runs --- is indented below the
-definition line.
+definition line.  The body concludes with a `return` keyword followed by the return value.
 
 When we call the function,
 the values we pass to it are assigned to those variables
 so that we can use them inside the function.
 Inside the function,
-we use a [return statement]({{ page.root }}/reference/#return-statement) to send a result back to whoever asked for it.
+we use a [return statement]({{ page.root }}/reference/#return-statement) to send a result
+back to whoever asked for it.
 
 Let's try running our function.
-Calling our own function is no different from calling any other function:
 
 ~~~
-print('freezing point of water:', fahr_to_kelvin(32))
-print('boiling point of water:', fahr_to_kelvin(212))
+fahr_to_celsius(32)
 ~~~
-{: .python}
+{: .language-python}
+
+This command should call our function, using "32" as the input and return the function value.
+
+In fact, calling our own function is no different from calling any other function:
+~~~
+print('freezing point of water:', fahr_to_celsius(32), 'C')
+print('boiling point of water:', fahr_to_celsius(212), 'C')
+~~~
+{: .language-python}
 
 ~~~
-freezing point of water: 273.15
-boiling point of water: 373.15
+freezing point of water: 0.0 C
+boiling point of water: 100.0 C
 ~~~
 {: .output}
 
 We've successfully called the function that we defined,
 and we have access to the value that we returned.
 
-> ## Integer Division
->
-> We are using Python 3, where division always returns a floating point number:
->
-> ~~~
-> $ python3 -c "print(5/9)"
-> ~~~
-> {: .python}
->
-> ~~~
-> 0.5555555555555556
-> ~~~
-> {: .output}
->
-> Unfortunately, this wasn't the case in Python 2:
->
-> ~~~
-> 5/9
-> ~~~
-> {: .python}
->
-> ~~~
-> 0
-> ~~~
-> {: .output}
->
-> If you are using Python 2 and want to keep the fractional part of division
-> you need to convert one or the other number to floating point:
->
-> ~~~
-> float(5)/9
-> ~~~
-> {: .python}
->
-> ~~~
-> 0.555555555556
-> ~~~
-> {: .output}
->
-> ~~~
-> 5/float(9)
-> ~~~
-> {: .python}
->
-> ~~~
-> 0.555555555556
-> ~~~
-> {: .output}
->
-> ~~~
-> 5.0/9
-> ~~~
-> {: .python}
->
-> ~~~
-> 0.555555555556
-> ~~~
-> {: .output}
-> ~~~
-> 5/9.0
-> ~~~
-> {: .python}
->
-> ~~~
-> 0.555555555556
-> ~~~
-> {: .output}
->
-> And if you want an integer result from division in Python 3,
-> use a double-slash:
->
-> ~~~
-> 4//2
-> ~~~
-> {: .python}
->
-> ~~~
-> 2
-> ~~~
-> {: .output}
->
-> ~~~
-> 3//2
-> ~~~
-> {: .python}
->
-> ~~~
-> 1
-> ~~~
-> {: .output}
-{: .callout}
 
 ## Composing Functions
 
-Now that we've seen how to turn Fahrenheit into Kelvin,
-it's easy to turn Kelvin into Celsius:
+Now that we've seen how to turn Fahrenheit into Celsius,
+we can also write the function to turn Celsius into Kelvin:
 
 ~~~
-def kelvin_to_celsius(temp_k):
-    return temp_k - 273.15
+def celsius_to_kelvin(temp_c):
+    return temp_c + 273.15
 
-print('absolute zero in Celsius:', kelvin_to_celsius(0.0))
+print('freezing point of water in Kelvin:', celsius_to_kelvin(0.))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
-absolute zero in Celsius: -273.15
+freezing point of water in Kelvin: 273.15
 ~~~
 {: .output}
 
-What about converting Fahrenheit to Celsius?
+What about converting Fahrenheit to Kelvin?
 We could write out the formula,
 but we don't need to.
 Instead,
 we can [compose]({{ page.root }}/reference/#compose) the two functions we have already created:
 
 ~~~
-def fahr_to_celsius(temp_f):
-    temp_k = fahr_to_kelvin(temp_f)
-    result = kelvin_to_celsius(temp_k)
-    return result
+def fahr_to_kelvin(temp_f):
+    temp_c = fahr_to_celsius(temp_f)
+    temp_k = celsius_to_kelvin(temp_c)
+    return temp_k
 
-print('freezing point of water in Celsius:', fahr_to_celsius(32.0))
+print('boiling point of water in Kelvin:', fahr_to_kelvin(212.0))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
-freezing point of water in Celsius: 0.0
+boiling point of water in Kelvin: 373.15
 ~~~
 {: .output}
 
 This is our first taste of how larger programs are built:
 we define basic operations,
 then combine them in ever-large chunks to get the effect we want.
-Real-life functions will usually be larger than the ones shown here --- typically half a dozen to a few dozen lines --- but
-they shouldn't ever be much longer than that,
+Real-life functions will usually be larger than the ones shown here --- typically half a dozen
+to a few dozen lines --- but they shouldn't ever be much longer than that,
 or the next person who reads it won't be able to understand what's going on.
 
 ## Tidying up
@@ -252,7 +169,7 @@ def analyze(filename):
     fig.tight_layout()
     matplotlib.pyplot.show()
 ~~~
-{: .python}
+{: .language-python}
 
 and another function called `detect_problems` that checks for those systematics
 we noticed:
@@ -269,19 +186,21 @@ def detect_problems(filename):
     else:
         print('Seems OK!')
 ~~~
-{: .python}
+{: .language-python}
 
 Notice that rather than jumbling this code together in one giant `for` loop,
 we can now read and reuse both ideas separately.
 We can reproduce the previous analysis with a much simpler `for` loop:
 
 ~~~
+filenames = sorted(glob.glob('inflammation*.csv'))
+
 for f in filenames[:3]:
     print(f)
     analyze(f)
     detect_problems(f)
 ~~~
-{: .python}
+{: .language-python}
 
 By giving our functions human-readable names,
 we can more easily read and understand what is happening in the `for` loop.
@@ -293,26 +212,27 @@ we can do so in a single line.
 Once we start putting things in functions so that we can re-use them,
 we need to start testing that those functions are working correctly.
 To see how to do this,
-let's write a function to center a dataset around a particular value:
+let's write a function to offset a dataset so that it's mean value
+shifts to a user-defined value:
 
 ~~~
-def center(data, desired):
-    return (data - numpy.mean(data)) + desired
+def offset_mean(data, target_mean_value):
+    return (data - numpy.mean(data)) + target_mean_value
 ~~~
-{: .python}
+{: .language-python}
 
 We could test this on our actual data,
 but since we don't know what the values ought to be,
 it will be hard to tell if the result was correct.
 Instead,
 let's use NumPy to create a matrix of 0's
-and then center that around 3:
+and then offset its values to have a mean value of 3:
 
 ~~~
 z = numpy.zeros((2,2))
-print(center(z, 3))
+print(offset_mean(z, 3))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 [[ 3.  3.]
@@ -321,13 +241,13 @@ print(center(z, 3))
 {: .output}
 
 That looks right,
-so let's try `center` on our real data:
+so let's try `offset_mean` on our real data:
 
 ~~~
 data = numpy.loadtxt(fname='inflammation-01.csv', delimiter=',')
-print(center(data, 0))
+print(offset_mean(data, 0))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 [[-6.14875 -6.14875 -5.14875 ..., -3.14875 -6.14875 -6.14875]
@@ -345,27 +265,31 @@ but there are a few simple tests that will reassure us:
 
 ~~~
 print('original min, mean, and max are:', numpy.min(data), numpy.mean(data), numpy.max(data))
-centered = center(data, 0)
-print('min, mean, and max of centered data are:', numpy.min(centered), numpy.mean(centered), numpy.max(centered))
+offset_data = offset_mean(data, 0)
+print('min, mean, and max of offset data are:', 
+      numpy.min(offset_data), 
+      numpy.mean(offset_data), 
+      numpy.max(offset_data))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 original min, mean, and max are: 0.0 6.14875 20.0
-min, mean, and and max of centered data are: -6.14875 2.84217094304e-16 13.85125
+min, mean, and and max of offset data are: -6.14875 2.84217094304e-16 13.85125
 ~~~
 {: .output}
 
 That seems almost right:
 the original mean was about 6.1,
 so the lower bound from zero is now about -6.1.
-The mean of the centered data isn't quite zero --- we'll explore why not in the challenges --- but it's pretty close.
+The mean of the offset data isn't quite zero --- we'll explore why not in the challenges --- but
+it's pretty close.
 We can even go further and check that the standard deviation hasn't changed:
 
 ~~~
-print('std dev before and after:', numpy.std(data), numpy.std(centered))
+print('std dev before and after:', numpy.std(data), numpy.std(offset_data))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 std dev before and after: 4.61383319712 4.61383319712
@@ -377,9 +301,10 @@ but we probably wouldn't notice if they were different in the sixth decimal plac
 Let's do this instead:
 
 ~~~
-print('difference in standard deviations before and after:', numpy.std(data) - numpy.std(centered))
+print('difference in standard deviations before and after:', 
+      numpy.std(data) - numpy.std(offset_data))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 difference in standard deviations before and after: -3.5527136788e-15
@@ -394,38 +319,42 @@ We have one more task first, though:
 we should write some [documentation]({{ page.root }}/reference/#documentation) for our function
 to remind ourselves later what it's for and how to use it.
 
-The usual way to put documentation in software is to add [comments]({{ page.root }}/reference/#comment) like this:
+The usual way to put documentation in software is
+to add [comments]({{ page.root }}/reference/#comment) like this:
 
 ~~~
-# center(data, desired): return a new array containing the original data centered around the desired value.
-def center(data, desired):
-    return (data - numpy.mean(data)) + desired
+# offset_mean(data, target_mean_value): 
+# return a new array containing the original data with its mean offset to match the desired value.
+def offset_mean(data, target_mean_value):
+    return (data - numpy.mean(data)) + target_mean_value
 ~~~
-{: .python}
+{: .language-python}
 
 There's a better way, though.
 If the first thing in a function is a string that isn't assigned to a variable,
 that string is attached to the function as its documentation:
 
 ~~~
-def center(data, desired):
-    '''Return a new array containing the original data centered around the desired value.'''
-    return (data - numpy.mean(data)) + desired
+def offset_mean(data, target_mean_value):
+    '''Return a new array containing the original data
+       with its mean offset to match the desired value.'''
+    return (data - numpy.mean(data)) + target_mean_value
 ~~~
-{: .python}
+{: .language-python}
 
-This is better because we can now ask Python's built-in help system to show us the documentation for the function:
-
-~~~
-help(center)
-~~~
-{: .python}
+This is better because we can now ask Python's built-in help system to show us
+the documentation for the function:
 
 ~~~
-Help on function center in module __main__:
+help(offset_mean)
+~~~
+{: .language-python}
 
-center(data, desired)
-    Return a new array containing the original data centered around the desired value.
+~~~
+Help on function offset_mean in module __main__:
+
+offset_mean(data, target_mean_value)
+    Return a new array containing the original data with its mean offset to match the desired value.
 ~~~
 {: .output}
 
@@ -435,21 +364,22 @@ but if we do,
 we can break the string across multiple lines:
 
 ~~~
-def center(data, desired):
-    '''Return a new array containing the original data centered around the desired value.
-    Example: center([1, 2, 3], 0) => [-1, 0, 1]'''
-    return (data - numpy.mean(data)) + desired
+def offset_mean(data, target_mean_value):
+    '''Return a new array containing the original data
+       with its mean offset to match the desired value.
+    Example: offset_mean([1, 2, 3], 0) => [-1, 0, 1]'''
+    return (data - numpy.mean(data)) + target_mean_value
 
-help(center)
+help(offset_mean)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 Help on function center in module __main__:
 
-center(data, desired)
-    Return a new array containing the original data centered around the desired value.
-    Example: center([1, 2, 3], 0) => [-1, 0, 1]
+offset_mean(data, target_mean_value)
+    Return a new array containing the original data with its mean offset to match the desired value.
+    Example: offset_mean([1, 2, 3], 0) => [-1, 0, 1]
 ~~~
 {: .output}
 
@@ -464,7 +394,7 @@ we can pass the filename to `loadtxt` without the `fname=`:
 ~~~
 numpy.loadtxt('inflammation-01.csv', delimiter=',')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 array([[ 0.,  0.,  1., ...,  3.,  0.,  0.],
@@ -482,7 +412,7 @@ but we still need to say `delimiter=`:
 ~~~
 numpy.loadtxt('inflammation-01.csv', ',')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 ---------------------------------------------------------------------------
@@ -503,25 +433,27 @@ TypeError: data type "," not understood
 
 To understand what's going on,
 and make our own functions easier to use,
-let's re-define our `center` function like this:
+let's re-define our `offset_mean` function like this:
 
 ~~~
-def center(data, desired=0.0):
-    '''Return a new array containing the original data centered around the desired value (0 by default).
-    Example: center([1, 2, 3], 0) => [-1, 0, 1]'''
-    return (data - numpy.mean(data)) + desired
+def offset_mean(data, target_mean_value=0.0):
+    '''Return a new array containing the original data with its mean offset to match the
+       desired value (0 by default).
+    Example: offset_mean([1, 2, 3], 0) => [-1, 0, 1]'''
+    return (data - numpy.mean(data)) + target_mean_value
 ~~~
-{: .python}
+{: .language-python}
 
-The key change is that the second parameter is now written `desired=0.0` instead of just `desired`.
+The key change is that the second parameter is now written `target_mean_value=0.0`
+instead of just `target_mean_value`.
 If we call the function with two arguments,
 it works as it did before:
 
 ~~~
 test_data = numpy.zeros((2, 2))
-print(center(test_data, 3))
+print(offset_mean(test_data, 3))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 [[ 3.  3.]
@@ -530,22 +462,23 @@ print(center(test_data, 3))
 {: .output}
 
 But we can also now call it with just one parameter,
-in which case `desired` is automatically assigned the [default value]({{ page.root }}/reference/#default-value) of 0.0:
+in which case `target_mean_value` is automatically assigned
+the [default value]({{ page.root }}/reference/#default-value) of 0.0:
 
 ~~~
 more_data = 5 + numpy.zeros((2, 2))
-print('data before centering:')
+print('data before mean offset:')
 print(more_data)
-print('centered data:')
-print(center(more_data))
+print('offset data:')
+print(offset_mean(more_data))
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
-data before centering:
+data before mean offset:
 [[ 5.  5.]
  [ 5.  5.]]
-centered data:
+offset data:
 [[ 0.  0.]
  [ 0.  0.]]
 ~~~
@@ -569,7 +502,7 @@ display(55)
 print('two parameters:')
 display(55, 66)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 no parameters:
@@ -590,7 +523,7 @@ We can override this behavior by naming the value as we pass it in:
 print('only setting the value of c')
 display(c=77)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 only setting the value of c
@@ -604,12 +537,13 @@ let's look at the help for `numpy.loadtxt`:
 ~~~
 help(numpy.loadtxt)
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 Help on function loadtxt in module numpy.lib.npyio:
 
 loadtxt(fname, dtype=<class 'float'>, comments='#', delimiter=None, converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0)
+
     Load data from a text file.
 
     Each row in the text file must have the same number of values.
@@ -698,8 +632,7 @@ There's a lot of information here,
 but the most important part is the first couple of lines:
 
 ~~~
-loadtxt(fname, dtype=<type 'float'>, comments='#', delimiter=None, converters=None, skiprows=0, usecols=None,
-        unpack=False, ndmin=0)
+loadtxt(fname, dtype=<type 'float'>, comments='#', delimiter=None, converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0)
 ~~~
 {: .output}
 
@@ -710,14 +643,14 @@ If we call the function like this:
 ~~~
 numpy.loadtxt('inflammation-01.csv', ',')
 ~~~
-{: .python}
+{: .language-python}
 
 then the filename is assigned to `fname` (which is what we want),
 but the delimiter string `','` is assigned to `dtype` rather than `delimiter`,
-because `dtype` is the second parameter in the list. However ',' isn't a known `dtype` so
+because `dtype` is the second parameter in the list. However `','` isn't a known `dtype` so
 our code produced an error message when we tried to run it.
 When we call `loadtxt` we don't have to provide `fname=` for the filename because it's the
-first item in the list, but if we want the ',' to be assigned to the variable `delimiter`,
+first item in the list, but if we want the `','` to be assigned to the variable `delimiter`,
 we *do* have to provide `delimiter=` for the second parameter since `delimiter` is not
 the second parameter in the list.
 
@@ -749,7 +682,7 @@ def std_dev(sample):
 
     return numpy.sqrt(sum_squared_devs / (len(sample) - 1))
 ~~~
-{: .python}
+{: .language-python}
 
 The functions `s` and `std_dev` are computationally equivalent (they
 both calculate the sample standard deviation), but to a human reader,
@@ -777,7 +710,7 @@ readable code!
 > ~~~
 > print(fence('name', '*'))
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > *name*
@@ -789,7 +722,42 @@ readable code!
 > > def fence(original, wrapper):
 > >     return wrapper + original + wrapper
 > > ~~~
-> > {: .python}
+> > {: .language-python}
+> {: .solution}
+{: .challenge}
+
+> ## Return versus print
+>
+> Note that `return` and `print` are not interchangeable.
+> `print` is a Python function that *prints* data to the screen.
+> It enables us, *users*, see the data.
+> `return` statement, on the other hand, makes data visible to the program.
+> Let's have a look at the following function:
+>
+> ~~~
+> def add(a, b):
+>     print(a + b)
+> ~~~
+> {: .language-python}
+>
+> **Question**: What will we see if we execute the following commands?
+> ~~~
+> A = add(7, 3)
+> print(A)
+> ~~~
+> {: .language-python}
+>
+> > ## Solution
+> > Python will first execute the function `add` with `a = 7` and `b = 3`,
+> > and, therefore, print `10`. However, because function `add` does not have a
+> > line that starts with `return` (no `return` "statement"), it will, by default, return
+> > nothing which, in Python world, is called `None`. Therefore, `A` will be assigned to `None`
+> > and the last line (`print(A)`) will print `None`. As a result, we will see:
+> > ~~~
+> > 10
+> > None
+> > ~~~
+> > {: .output}
 > {: .solution}
 {: .challenge}
 
@@ -805,7 +773,7 @@ readable code!
 > ~~~
 > print(outer('helium'))
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > hm
@@ -817,7 +785,7 @@ readable code!
 > > def outer(input_string):
 > >     return input_string[0] + input_string[-1]
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -825,10 +793,10 @@ readable code!
 >
 > Write a function `rescale` that takes an array as input
 > and returns a corresponding array of values scaled to lie in the range 0.0 to 1.0.
-> (Hint: If $L$ and $H$ are the lowest and highest values in the original array,
-> then the replacement for a value $v$ should be $(v-L) / (H-L)$.)
+> (Hint: If `L` and `H` are the lowest and highest values in the original array,
+> then the replacement for a value `v` should be `(v-L) / (H-L)`.)
 >
-> > ## Challenge
+> > ## Solution
 > > ~~~
 > > def rescale(input_array):
 > >     L = numpy.min(input_array)
@@ -836,7 +804,7 @@ readable code!
 > >     output_array = (input_array - L) / (H - L)
 > >     return output_array
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -861,13 +829,13 @@ readable code!
 > > array([ 0.  ,  0.25,  0.5 ,  0.75,  1.  ])
 > > '''
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
 > ## Defining Defaults
 >
-> Rewrite the `rescale` function so that it scales data to lie between 0.0 and 1.0 by default,
+> Rewrite the `rescale` function so that it scales data to lie between `0.0` and `1.0` by default,
 > but will allow the caller to specify lower and upper bounds if they want.
 > Compare your implementation to your neighbor's:
 > do the two functions always behave the same way?
@@ -882,13 +850,13 @@ readable code!
 > >     output_array = intermed_array * (high_val - low_val) + low_val
 > >     return output_array
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
 > ## Variables Inside and Outside Functions
 >
-> What does the following piece of code display when run - and why?
+> What does the following piece of code display when run --- and why?
 >
 > ~~~
 > f = 0
@@ -904,7 +872,7 @@ readable code!
 >
 > print(k)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > > ## Solution
 > >
@@ -915,7 +883,8 @@ readable code!
 > > 0
 > > ~~~
 > > {: .output}
-> > `k` is 0 because the `k` inside the function `f2k` doesn't know about the `k` defined outside the function.
+> > `k` is 0 because the `k` inside the function `f2k` doesn't know
+> > about the `k` defined outside the function.
 > {: .solution}
 {: .challenge}
 
@@ -930,7 +899,7 @@ readable code!
 >
 > print(numbers(1, three=3))
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > what do you expect will be printed?  What is actually printed?
 > What rule do you think Python is following?
@@ -948,7 +917,7 @@ readable code!
 >
 > func(-1, 2)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > 1. `a: b: 3 c: 6`
 > 2. `a: -1 b: 3 c: 6`
@@ -958,10 +927,10 @@ readable code!
 > > ## Solution
 > > Attempting to define the `numbers` function results in `4. SyntaxError`.
 > > The defined parameters `two` and `four` are given default values. Because
-> > `one` and `three` are not given default values, they are required to be 
+> > `one` and `three` are not given default values, they are required to be
 > > included as arguments when the function is called and must be placed
 > > before any parameters that have default values in the function definition.
-> > 
+> >
 > > The given call to `func` displays `a: -1 b: 2 c: 6`. -1 is assigned to
 > > the first parameter `a`, 2 is assigned to the next parameter `b`, and `c` is
 > > not passed a value, so it uses its default value 6.
@@ -970,12 +939,7 @@ readable code!
 
 > ## The Old Switcheroo
 >
-> Which of the following would be printed if you were to run this code? Why did you pick this answer?
->
-> 1. `7 3`
-> 2. `3 7`
-> 3. `3 3`
-> 4. `7 7`
+> Consider this code:
 >
 > ~~~
 > a = 3
@@ -990,7 +954,16 @@ readable code!
 >
 > print(a, b)
 > ~~~
-> {: .python}
+> {: .language-python}
+>
+> Which of the following would be printed if you were to run this code?
+> Why did you pick this answer?
+>
+> 1. `7 3`
+> 2. `3 7`
+> 3. `3 3`
+> 4. `7 7`
+>
 > > ## Solution
 > > `3, 7` is correct. Initially `a` has a value of 3 and `b` has a value of 7.
 > > When the swap function is called, it creates local variables (also called
@@ -1007,3 +980,5 @@ readable code!
 > to critique each other's functions and discuss how your function implementations
 > could be further improved to make them more readable.
 {: .challenge}
+
+{% include links.md %}

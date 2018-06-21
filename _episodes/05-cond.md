@@ -11,11 +11,10 @@ keypoints:
 - "Use `if condition` to start a conditional statement, `elif condition` to provide additional tests, and `else` to provide a default."
 - "The bodies of the branches of conditional statements must be indented."
 - "Use `==` to test for equality."
-- "`X and Y` is only true if both X and Y are true."
-- "`X or Y` is true if either X or Y, or both, are true."
+- "`X and Y` is only true if both `X` and `Y` are true."
+- "`X or Y` is true if either `X` or `Y`, or both, are true."
 - "Zero, the empty string, and the empty list are considered false; all other numbers, strings, and lists are considered true."
-- "Nest loops to operate on multi-dimensional data."
-- "Put code whose parameters change frequently in a function, then call it with different parameter values to customize its behavior."
+- "`True` and `False` represent truth values."
 ---
 
 In our last lesson, we discovered something suspicious was going on
@@ -36,7 +35,7 @@ else:
     print('not greater')
 print('done')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 not greater
@@ -62,10 +61,10 @@ Python simply does nothing if the test is false:
 num = 53
 print('before conditional...')
 if num > 100:
-    print('53 is greater than 100')
+    print(num,' is greater than 100')
 print('...after conditional')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 before conditional...
@@ -81,22 +80,21 @@ The following Python code uses `elif` to print the sign of a number.
 num = -3
 
 if num > 0:
-    print(num, "is positive")
+    print(num, 'is positive')
 elif num == 0:
-    print(num, "is zero")
+    print(num, 'is zero')
 else:
-    print(num, "is negative")
+    print(num, 'is negative')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 "-3 is negative"
 ~~~
 {: .output}
 
-One important thing to notice in the code above is that we use a double equals sign `==` to test for equality
-rather than a single equals sign
-because the latter is used to mean assignment.
+Note that to test for equality we use a double equals sign `==`
+rather than a single equals sign `=` which is used to assign values.
 
 We can also combine tests using `and` and `or`.
 `and` is only true if both parts are true:
@@ -107,7 +105,7 @@ if (1 > 0) and (-1 > 0):
 else:
     print('at least one part is false')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 at least one part is false
@@ -120,17 +118,30 @@ while `or` is true if at least one part is true:
 if (1 < 0) or (-1 < 0):
     print('at least one test is true')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 at least one test is true
 ~~~
 {: .output}
 
+> ## `True` and `False`
+> `True` and `False` are special words in Python called `booleans`,
+> which represent truth values. A statement such as `1 < 0` returns
+> the value `False`, while `-1 < 0` returns the value `True`.
+{: .callout}
+
 ## Checking our Data
 
 Now that we've seen how conditionals work,
 we can use them to check for the suspicious features we saw in our inflammation data.
+Since we are going to be working with data, let's import the numpy library:
+
+~~~
+import numpy
+~~~
+{: .language-python}
+
 In the first couple of plots, the maximum inflammation per day
 seemed to rise like a straight line, one unit per day.
 We can check for this inside the `for` loop we wrote with the following conditional:
@@ -139,7 +150,7 @@ We can check for this inside the `for` loop we wrote with the following conditio
 if numpy.max(data, axis=0)[0] == 0 and numpy.max(data, axis=0)[20] == 20:
     print('Suspicious looking maxima!')
 ~~~
-{: .python}
+{: .language-python}
 
 We also saw a different problem in the third dataset;
 the minima per day were all zero (looks like a healthy person snuck into our study).
@@ -149,7 +160,7 @@ We can also check for this with an `elif` condition:
 elif numpy.sum(numpy.min(data, axis=0)) == 0:
     print('Minima add up to zero!')
 ~~~
-{: .python}
+{: .language-python}
 
 And if neither of these conditions are true, we can use `else` to give the all-clear:
 
@@ -157,7 +168,7 @@ And if neither of these conditions are true, we can use `else` to give the all-c
 else:
     print('Seems OK!')
 ~~~
-{: .python}
+{: .language-python}
 
 Let's test that out:
 
@@ -170,7 +181,7 @@ elif numpy.sum(numpy.min(data, axis=0)) == 0:
 else:
     print('Seems OK!')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 Suspicious looking maxima!
@@ -186,7 +197,7 @@ elif numpy.sum(numpy.min(data, axis=0)) == 0:
 else:
     print('Seems OK!')
 ~~~
-{: .python}
+{: .language-python}
 
 ~~~
 Minima add up to zero!
@@ -202,13 +213,7 @@ freeing us from having to manually examine every plot for features we've seen be
 
 > ## How Many Paths?
 >
-> Which of the following would be printed if you were to run this code?
-> Why did you pick this answer?
->
-> 1.  A
-> 2.  B
-> 3.  C
-> 4.  B and C
+> Consider this code:
 >
 > ~~~
 > if 4 > 5:
@@ -218,7 +223,15 @@ freeing us from having to manually examine every plot for features we've seen be
 > elif 4 < 5:
 >     print('C')
 > ~~~
-> {: .python}
+> {: .language-python}
+>
+> Which of the following would be printed if you were to run this code?
+> Why did you pick this answer?
+>
+> 1.  A
+> 2.  B
+> 3.  C
+> 4.  B and C
 >
 > > ## Solution
 > > C gets printed because the first two conditions, `4 > 5` and `4 == 5`, are not true,
@@ -228,9 +241,7 @@ freeing us from having to manually examine every plot for features we've seen be
 
 > ## What Is Truth?
 >
-> `True` and `False` are special words in Python called `booleans`
-> which represent true and false statements.
-> However, they aren't the only values in Python that are true and false.
+> `True` and `False` booleans are not the only values in Python that are true and false.
 > In fact, *any* value can be used in an `if` or `elif`.
 > After reading and running the code below,
 > explain what the rule is for which values are considered true and which are considered false.
@@ -249,7 +260,7 @@ freeing us from having to manually examine every plot for features we've seen be
 > if 1:
 >     print('one is true')
 > ~~~
-> {: .python}
+> {: .language-python}
 {: .challenge}
 
 > ## That's Not Not What I Meant
@@ -268,7 +279,7 @@ freeing us from having to manually examine every plot for features we've seen be
 > if not not True:
 >     print('not not True is true')
 > ~~~
-> {: .python}
+> {: .language-python}
 {: .challenge}
 
 > ## Close Enough
@@ -288,14 +299,14 @@ freeing us from having to manually examine every plot for features we've seen be
 > > else:
 > >     print('False')
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 >
 > > ## Solution 2
 > > ~~~
 > > print(abs(a - b) < 0.1 * abs(b))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > >
 > > This works because the Booleans `True` and `False`
 > > have string representations which can be printed.
@@ -304,7 +315,8 @@ freeing us from having to manually examine every plot for features we've seen be
 
 > ## In-Place Operators
 >
-> Python (and most other languages in the C family) provides [in-place operators]({{ page.root }}/reference/#in-place-operators)
+> Python (and most other languages in the C family) provides
+> [in-place operators]({{ page.root }}/reference/#in-place-operators)
 > that work like this:
 >
 > ~~~
@@ -313,7 +325,7 @@ freeing us from having to manually examine every plot for features we've seen be
 > x *= 3 # multiply x by 3
 > print(x)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > 6
@@ -338,32 +350,52 @@ freeing us from having to manually examine every plot for features we've seen be
 > >         negative_sum += num
 > > print(positive_sum, negative_sum)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > >
 > > Here `pass` means "don't do anything".
 > In this particular case, it's not actually needed, since if `num == 0` neither
-> > sum needs to change, but it illustrates the use of `elif`.
+> > sum needs to change, but it illustrates the use of `elif` and `pass`.
 > {: .solution}
 {: .challenge}
 
 > ## Sorting a List Into Buckets
 >
-> The folder containing our data files has large data sets whose names start with
-> "inflammation-", small ones whose names with "small-", and possibly other files
-> whose sizes we don't know.  Our goal is to sort those files into three lists
-> called `large_files`, `small_files`, and `other_files` respectively.  Add code
-> to the template below to do this.  Note that the string method
+> In our `data` folder, large data sets are stored in files whose names start with
+> "inflammation-" and small data sets -- in files whose names start with "small-". We
+> also have some other files that we do not care about at this point. We'd like to break all
+> these files into three lists called `large_files`, `small_files`, and `other_files`,
+> respectively.
+>
+> Add code to the template below to do this. Note that the string method
 > [`startswith`](https://docs.python.org/3.5/library/stdtypes.html#str.startswith)
 > returns `True` if and only if the string it is called on starts with the string
-> passed as an argument.
+> passed as an argument, that is:
 >
+> ~~~
+> "String".startswith("Str")
+> ~~~
+> {: .language-python}
+> ~~~
+> True
+> ~~~
+> {: .output}
+> But
+> ~~~
+> "String".startswith("str")
+> ~~~
+> {: .language-python}
+> ~~~
+> False
+> ~~~
+> {: .output}
+>Use the following Python code as your starting point:
 > ~~~
 > files = ['inflammation-01.csv', 'myscript.py', 'inflammation-02.csv', 'small-01.csv', 'small-02.csv']
 > large_files = []
 > small_files = []
 > other_files = []
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > Your solution should:
 >
@@ -378,29 +410,29 @@ freeing us from having to manually examine every plot for features we've seen be
 > small_files = ['small-01.csv', 'small-02.csv']
 > other_files = ['myscript.py']
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > > ## Solution
 > > ~~~
 > > for file in files:
-> >     if 'inflammation-' in file:
+> >     if file.startswith('inflammation-'):
 > >         large_files.append(file)
-> >     elif 'small-' in file:
+> >     elif file.startswith('small-'):
 > >         small_files.append(file)
 > >     else:
 > >         other_files.append(file)
-> >         
-> > print(large_files)
-> > print(small_files)
-> > print(other_files)
+> >
+> > print('large_files:', large_files)
+> > print('small_files:', small_files)
+> > print('other_files:', other_files)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
 > ## Counting Vowels
 >
-> 1.  Write a loop that counts the number of vowels in a character string.
+> 1. Write a loop that counts the number of vowels in a character string.
 > 2. Test it on a few individual words and full sentences.
 > 3. Once you are done, compare your solution to your neighbor's.
 >    Did you make the same decisions about how to handle the letter 'y'
@@ -414,9 +446,11 @@ freeing us from having to manually examine every plot for features we've seen be
 > > for char in sentence:
 > >     if char in vowels:
 > >         count += 1
-> >         
+> >
 > > print("The number of vowels in this string is " + str(count))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
+
+{% include links.md %}

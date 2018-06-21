@@ -1,6 +1,7 @@
 ---
 layout: reference
 permalink: /reference/
+root: ..
 ---
 
 ## Glossary
@@ -148,6 +149,10 @@ method
     Each of an object's methods typically implements one of the things it can do,
     or one of the questions it can answer.
 
+mutable
+:   Changeable. The value of mutable data can be altered after it has been
+    created. See [immutable](#immutable)."
+
 object
 :   A collection of conceptually related variables ([members](#member)) and
     functions using those variables ([methods](#method)).
@@ -249,6 +254,9 @@ type of error
 :   Indicates the nature of an error in a program. For example, in Python,
     an `IOError` to problems with file input/output.
     See also: [syntax error](#syntax-error).
+
+variable
+:   A value that has a name associated with it.
 
 while loop
 :   A loop that keeps executing as long as some condition is true.
